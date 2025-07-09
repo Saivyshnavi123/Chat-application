@@ -89,3 +89,28 @@ def signup():
             conn.close()
     return render_template('signup.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        session.clear()
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute('SELECT password, private_key, public_key FROM users WHERE email = ?', (email,))
+        user = c.fetchone()
+        conn.close()
+        if user and check_password_hash(user[0], password):
+            if not validate_key_pair(user[2], user[1]):
+                logger.error(f"Invalid key pair for {email}")
+                return render_template('login.html', error="Invalid key pair in database. Please re-sign up.")
+            session['email'] = email
+            session['private_key'] = user[1] if user[1] else None
+            if not session['private_key']:
+                logger.error(f"No private key found for user {email}")
+                return render_template('login.html', error="No private key for this user. Please re-sign up.")
+            logger.debug(f"User {email} logged in")
+            return redirect(url_for('home'))
+        return render_template('login.html', error="Invalid credentials")
+    return render_template('login.html')
+
