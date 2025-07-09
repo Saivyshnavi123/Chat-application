@@ -42,3 +42,12 @@ def init_db():
                   recipient_email TEXT, encrypted_message TEXT, encrypted_key TEXT, nonce TEXT)''')
     conn.commit()
     conn.close()
+
+init_db()
+
+@app.route('/')
+def index():
+    if 'email' in session:
+        return redirect(url_for('home'))
+    return redirect(url_for('login'))
+
