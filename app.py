@@ -30,3 +30,15 @@ def validate_key_pair(public_key, private_key):
     except Exception as e:
         logger.error(f"Key pair validation failed: {str(e)}")
         return False
+
+# Database setup
+def init_db():
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS users 
+                 (email TEXT PRIMARY KEY, password TEXT, public_key TEXT, private_key TEXT, key_verification_url TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS messages 
+                 (Id INTEGER PRIMARY KEY AUTOINCREMENT, sender_email TEXT, 
+                  recipient_email TEXT, encrypted_message TEXT, encrypted_key TEXT, nonce TEXT)''')
+    conn.commit()
+    conn.close()
