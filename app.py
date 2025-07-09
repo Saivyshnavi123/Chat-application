@@ -114,3 +114,42 @@ def login():
         return render_template('login.html', error="Invalid credentials")
     return render_template('login.html')
 
+@app.route('/home')
+def home():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    if not session.get('private_key'):
+        logger.error(f"No private key in session for {session['email']}")
+        return render_template('home.html', messages=[(0, "System", "No private key available. Please re-sign up.")])
+    
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('SELECT id, sender_email, encrypted_message, encrypted_key, nonce FROM messages WHERE recipient_email = ?', 
+             (session['email'],))
+    messages = c.fetchall()
+    conn.close()
+    
+    decrypted_messages = []
+    for msg in messages:
+        try:
+            private_key = RSA.import_key(session['private_key'])
+            cipher_rsa = PKCS1_OAEP.new(private_key)
+            encrypted_key = base64.b64decode(msg[3])
+            aes_key = cipher_rsa.decrypt(encrypted_key)
+            encrypted_message = base64.b64decode(msg[2])
+            nonce = base64.b64decode(msg[4])
+            cipher_aes = AES.new(aes_key, AES.MODE_CBC, nonce)
+            decrypted_bytes = cipher_aes.decrypt(encrypted_message)
+            padding_length = decrypted_bytes[-1]
+            decrypted_bytes = decrypted_bytes[:-padding_length]
+            try:
+                decrypted_message = decrypted_bytes.decode('utf-8')
+                decrypted_messages.append((msg[0], msg[1], decrypted_message))
+            except UnicodeDecodeError as e:
+                logger.error(f"UTF-8 decode failed for message {msg[0]}")
+                decrypted_messages.append((msg[0], msg[1], f"Error decrypting message: UTF-8 decode failed"))
+        except Exception as e:
+            logger.error(f"Failed to decrypt message {msg[0]}: {str(e)}")
+            decrypted_messages.append((msg[0], msg[1], f"Error decrypting message: {str(e)}"))
+    return render_template('home.html', messages=decrypted_messages)
+
