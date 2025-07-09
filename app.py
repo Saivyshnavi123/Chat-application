@@ -71,4 +71,21 @@ def signup():
         
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
+        try:
+            c.execute('DELETE FROM users WHERE email = ?', (email,))
+            c.execute(' INSERT INTO users (email, password, public_key, private_key, key_verification_url) VALUES (?, ?, ?, ?, ?)', 
+                     (email, hashed_password, public_key, private_key, key_verification_url))
+            conn.commit()
+            session['private_key'] = private_key
+            session['email'] = email
+            logger.debug(f"User {email} signed up. Public key hash: {hashlib.sha256(public_key.encode()).hexdigest()}")
+            return render_template('signup.html', 
+                                 message="Signup successful! Copy your public key and post it to a public GitHub repository or Gist. Enter the URL below.",
+                                 public_key=public_key, key_verification_url=key_verification_url)
+        except sqlite3.IntegrityError:
+            conn.close()
+            return render_template('signup.html', error="Email already exists")
+        finally:
+            conn.close()
+    return render_template('signup.html')
 
