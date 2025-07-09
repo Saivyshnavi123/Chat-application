@@ -42,3 +42,28 @@
 {% else %}
   <div class="alert alert-info text-center">No messages found.</div>
 {% endif %}
+<script>
+function deleteMessage(messageId) {
+    if (confirm('Are you sure you want to delete this message?')) {
+        fetch('/delete_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `message_id=${messageId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error deleting message: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            alert('Error deleting message: ' + error);  
+        });
+    }
+}
+</script>
+{% endblock %}        
