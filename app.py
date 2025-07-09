@@ -8,3 +8,10 @@ import base64
 import logging
 import hashlib
 import requests
+
+app = Flask(__name__)
+app.secret_key = 'supersecretkey123'
+
+# Setup logging for debugging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
