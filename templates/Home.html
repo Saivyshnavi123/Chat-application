@@ -20,4 +20,20 @@
             color: red;
             font-size: 1.2em;
         }
-    </style>
+</style>
+</head>
+<h2 class="mb-4 text-center">📨 Your Secure Messages</h2>
+{% if messages %}
+  <div class="row">
+    {% for msg in messages %}
+      <div class="col-md-6">
+        <div class="card mb-4 shadow message-card">
+          <div class="card-header text-white bg-dark">
+            From: {{ msg[1] }}
+            <span class="delete-btn" onclick="deleteMessage({{ msg[0] }})">✖</span>
+          </div>
+          <div class="card-body">
+            <p>{{ msg[2] }}</p>
+          </div>
+        </div>
+      </div>
