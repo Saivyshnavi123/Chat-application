@@ -51,3 +51,24 @@ def index():
         return redirect(url_for('home'))
     return redirect(url_for('login'))
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        key_verification_url = request.form.get('key_verification_url', '')  # Optional
+        
+        session.clear()
+        
+        key = RSA.generate(2048)
+        public_key = key.publickey().exportKey('PEM').decode()
+        private_key = key.exportKey('PEM').decode()
+        
+        if not validate_key_pair(public_key, private_key):
+            return render_template('signup.html', error="Generated key pair is invalid.")
+        
+        hashed_password = generate_password_hash(password)
+        
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+
