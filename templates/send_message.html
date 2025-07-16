@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+ {% extends "base.html" %}
 {% block content %}
 <head>
     <meta charset="UTF-8">
@@ -19,3 +19,19 @@
         }
     </style>
 </head>
+<div class="form-card mx-auto">
+  <h2 class="text-center mb-4">✉️ Send Encrypted Message</h2>
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+  {% if message %}
+    <div class="alert alert-success">{{ message }}</div>
+    {% if warning %}
+      <div class="alert alert-warning">{{ warning }}</div>
+    {% endif %}
+  {% endif %}
+  <form method="POST">
+    <div class="mb-3">
+      <label>Recipient Email</label>
+      <input type="email" name="recipient_email" id="recipient_email" class="form-control" required>
+    </div>
