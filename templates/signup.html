@@ -49,3 +49,29 @@
         {% endif %}
       {% endif %}
     {% endif %}
+ <form method="post">
+      <div class="mb-3">
+        <label>Email:</label>
+        <input type="email" class="form-control" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label>Password:</label>
+        <input type="password" class="form-control" name="password" required>
+      </div>
+      
+      <button type="submit" class="btn btn-success w-100">Signup</button>
+      <div class="mt-3 text-center">
+        <a href="{{ url_for('login') }}">← Back to Login</a>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+function copyPublicKey() {
+  const publicKey = document.getElementById('public_key').value;
+  navigator.clipboard.writeText(publicKey)
+    .then(() => alert('✅ Public key copied!'))
+    .catch(err => alert('❌ Failed to copy. Copy manually.'));
+}
+</script>
+{% endblock %}
