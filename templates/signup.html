@@ -25,4 +25,27 @@
         }
     </style>
 </head>
-
+<div class="form-card">
+  <div class="auth-container">
+    <h2 class="text-center mb-4">📝 Signup</h2>
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% if message %}
+      <div class="alert alert-success">{{ message|safe }}</div>
+      {% if public_key %}
+        <label>Your Public Key (Share this):</label>
+        <textarea id="public_key" class="form-control mb-2" rows="6" readonly>{{ public_key }}</textarea>
+        <button onclick="copyPublicKey()" class="btn btn-outline-primary w-100 mb-3">📋 Copy Public Key</button>
+        <p class="mt-2">Please follow these steps to share your public key:</p>
+        <ol>
+          <li>Go to <a href="https://github.com" target="_blank">GitHub</a> and create a public repository or Gist.</li>
+          <li>Paste your public key into a file (e.g., <code>public_key.pem</code>) in the repository or as the Gist content.</li>
+          <li>Copy the raw URL (e.g., <code>https://raw.githubusercontent.com/username/repo/main/public_key.pem</code> or <code>https://gist.githubusercontent.com/username/gist_id/raw</code>).</li>
+          <li>Paste the URL below to verify your public key.</li>
+        </ol>
+        {% if key_verification_url %}
+          <p>Verification URL: <a href="{{ key_verification_url }}" target="_blank">{{ key_verification_url }}</a></p>
+        {% endif %}
+      {% endif %}
+    {% endif %}
