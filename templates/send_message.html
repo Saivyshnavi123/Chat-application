@@ -35,3 +35,19 @@
       <label>Recipient Email</label>
       <input type="email" name="recipient_email" id="recipient_email" class="form-control" required>
     </div>
+<div class="mb-3">
+      <label>GitHub URL for Recipient's Public Key (Optional)</label>
+      <input type="url" name="verification_url" id="verification_url" class="form-control" placeholder="e.g., https://raw.githubusercontent.com/username/repo/main/public_key.pem">
+      <small class="form-text text-muted">Enter the raw URL of the recipient's public key. If not provided, the stored URL (if any) will be used.</small>
+    </div>
+    <div class="mb-3">
+      <label>Message</label>
+      <textarea name="message" class="form-control" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-success w-100">Send Message</button>
+  </form>
+  <div class="mt-3 text-center">
+    <a href="{{ url_for('home') }}">← Back to Inbox</a>
+  </div>
+</div>
+<script>
