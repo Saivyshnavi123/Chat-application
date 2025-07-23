@@ -126,3 +126,18 @@ To deploy the application online, use PythonAnywhere’s free tier:
 - **HTTPS**: Hosting on PythonAnywhere with “Force HTTPS” secures data in transit.
 - **Input Validation**: The app sanitizes inputs but could improve by validating GitHub URLs (e.g., checking for `raw.githubusercontent.com` or `gist.githubusercontent.com`).
 
+## Known Limitations
+
+- Limited error handling for invalid Gist URLs; warnings are shown instead of blocking messages.
+- SQLite is used, which is sufficient for small-scale use but may not scale for large user bases.
+
+
+## Resources
+
+- Flask: https://flask.palletsprojects.com/
+- PyCryptodome: https://pycryptodome.readthedocs.io/
+- Requests: https://requests.readthedocs.io/
+
+## Contributions
+
+*To be updated based on solo/group status. Please confirm if you’re working alone or with others.*
