@@ -12,3 +12,7 @@ This project is a Flask-based web application designed for secure messaging, imp
 **End-to-End Encryption**: Messages are encrypted using AES-CBC with a random key, which is encrypted with the recipient’s RSA public key (PKCS1_OAEP).
 **Message Management**: Users can view decrypted messages in their inbox and delete messages securely.
 **User-Friendly Interface**: Templates (`signup.html`, `send_message.html`, etc.) provide clear instructions for posting public keys to GitHub Gists and verifying recipient keys.
+
+##Requirements Fulfillment
+
+The proejct requires a secure messaging application with a mechanism to verify user identities, protecting against a malicious server swapping public keys. This is achieved through:
