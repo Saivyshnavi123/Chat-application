@@ -141,3 +141,11 @@ To deploy the application online, use PythonAnywhere’s free tier:
 ## Contributions
 
 *To be updated based on solo/group status. Please confirm if you’re working alone or with others.*
+
+## AI Usage
+
+*To be updated based on confirmation. If AI was used, logs are in `docs/ai_logs.txt`.*
+
+## License
+
+MIT License. See `LICENSE` file (if applicable).
