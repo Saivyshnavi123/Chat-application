@@ -20,3 +20,8 @@ The proejct requires a secure messaging application with a mechanism to verify u
 - **PK/DNS Based Identity**: Users post their public key to a public GitHub Gist (e.g., `https://gist.githubusercontent.com/Caxzen/0e795385c414ac7bddffd8883554fcf5/raw/9868773a0b2f9c95fd3861371dac3e0a9d331835/public_key.pem`) and provide the URL during signup. The application verifies the recipient’s public key against this URL before sending a message, ensuring the key hasn’t been tampered with. GitHub’s HTTPS URLs align with the “DNS based” aspect, and Gists serve as a “social media based identity” due to their public, user-associated nature.
 - **Security**: Messages are encrypted with AES and RSA, ensuring confidentiality. HTTPS (enabled via hosting) secures data in transit.
 - **Accessibility**: The application can be hosted on PythonAnywhere, providing a public URL for testing (e.g., `https://yourusername.pythonanywhere.com`).
+
+  ### Prerequisites
+- Python 3.8 or higher
+- Git (for cloning the repository)
+- A GitHub account (for creating Gists)
