@@ -38,3 +38,27 @@ The proejct requires a secure messaging application with a mechanism to verify u
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
+
+   3. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   The `requirements.txt` includes:
+   ```
+   Flask==2.0.1
+   Werkzeug==2.0.2
+   PyCryptodome==3.15.0
+   requests==2.28.1
+   ```
+
+4. **Initialize the Database**:
+   ```bash
+   python -c "from app import init_db; init_db()"
+   ```
+   This creates `database.db` with `users` and `messages` tables.
+
+5. **Run the Application Locally**:
+   ```bash
+   python app.py
+   ```
+   Access the app at `http://localhost:5000`.
