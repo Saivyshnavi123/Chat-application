@@ -83,3 +83,21 @@ To deploy the application online, use PythonAnywhere’s free tier:
    ```bash
    python -c "from app import init_db; init_db()"
    ```
+
+   5. **Configure Web App**:
+   - In the “Web” tab, create a manual configuration web app (Python 3.9).
+   - Set source code path: `/home/yourusername/mysite`.
+   - Set virtualenv: `myenv`.
+   - Edit WSGI file (`/var/www/yourusername_pythonanywhere_com_wsgi.py`):
+     ```python
+     import sys
+     project_home = '/home/yourusername/mysite'
+     if project_home not in sys.path:
+         sys.path.append(project_home)
+     from app import app as application
+     ```
+   - Set working directory: `/home/yourusername/mysite`.
+   - Add static file mapping: URL `/static/` to `/home/yourusername/mysite/static`.
+6. **Enable HTTPS**: In the “Web” tab, enable “Force HTTPS”.
+7. **Reload**: Click “Reload” and access at `https://yourusername.pythonanywhere.com`.
+
