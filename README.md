@@ -101,3 +101,20 @@ To deploy the application online, use PythonAnywhere’s free tier:
 6. **Enable HTTPS**: In the “Web” tab, enable “Force HTTPS”.
 7. **Reload**: Click “Reload” and access at `https://yourusername.pythonanywhere.com`.
 
+## Usage
+
+1. **Sign Up**:
+   - Navigate to `/signup`.
+   - Enter an email, password, and optionally a GitHub Gist URL containing your public key (e.g., `https://gist.githubusercontent.com/Caxzen/0e795385c414ac7bddffd8883554fcf5/raw/9868773a0b2f9c95fd3861371dac3e0a9d331835/public_key.pem`).
+   - Copy the displayed public key and create a public Gist:
+     - Go to [GitHub Gists](https://gist.github.com).
+     - Paste the key into a file (e.g., `public_key.pem`), set as public, and copy the raw URL.
+     - Paste the URL into the signup form if not already done.
+2. **Log In**: Use your email and password at `/login`.
+3. **Send a Message**:
+   - Go to `/send_message`.
+   - Enter the recipient’s email and optionally their Gist URL (auto-filled if stored).
+   - Write and send a message, which is encrypted with the recipient’s verified public key.
+4. **View Messages**: Access `/home` to view decrypted messages.
+5. **Delete Messages**: Delete messages from your inbox via the provided interface.
+
