@@ -118,3 +118,11 @@ To deploy the application online, use PythonAnywhere’s free tier:
 4. **View Messages**: Access `/home` to view decrypted messages.
 5. **Delete Messages**: Delete messages from your inbox via the provided interface.
 
+## Security Considerations
+
+- **Identity Verification**: The GitHub Gist-based public key verification prevents a malicious server from swapping keys, aligning with the project’s requirement.
+- **Encryption**: Messages are encrypted with AES-CBC (random 16-byte key and nonce) and RSA (PKCS1_OAEP), ensuring confidentiality.
+- **Vulnerability**: Private keys are stored in the database, which is insecure if the server is compromised. Future improvements could include client-side private key storage (e.g., download during signup).
+- **HTTPS**: Hosting on PythonAnywhere with “Force HTTPS” secures data in transit.
+- **Input Validation**: The app sanitizes inputs but could improve by validating GitHub URLs (e.g., checking for `raw.githubusercontent.com` or `gist.githubusercontent.com`).
+
