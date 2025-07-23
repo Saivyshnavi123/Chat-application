@@ -62,3 +62,24 @@ The proejct requires a secure messaging application with a mechanism to verify u
    python app.py
    ```
    Access the app at `http://localhost:5000`.
+
+   ### Hosting on PythonAnywhere
+To deploy the application online, use PythonAnywhere’s free tier:
+
+1. **Sign Up**: Create a free account at [PythonAnywhere](https://www.pythonanywhere.com).
+2. **Clone Repository**:
+   - In a Bash console:
+     ```bash
+     git clone https://github.com/yourusername/your-repo.git /home/yourusername/mysite
+     cd /home/yourusername/mysite
+     ```
+     3. **Set Up Virtual Environment**:
+   ```bash
+   mkvirtualenv --python=/usr/bin/python3.9 myenv
+   workon myenv
+   pip install -r requirements.txt
+   ```
+4. **Initialize Database**:
+   ```bash
+   python -c "from app import init_db; init_db()"
+   ```
