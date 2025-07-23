@@ -25,3 +25,16 @@ The proejct requires a secure messaging application with a mechanism to verify u
 - Python 3.8 or higher
 - Git (for cloning the repository)
 - A GitHub account (for creating Gists)
+
+- ### Setup
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/your-repo.git
+   cd your-repo
+   ```
+
+2. **Create a Virtual Environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
