@@ -70,8 +70,8 @@ To deploy the application online, use PythonAnywhere’s free tier:
 2. **Clone Repository**:
    - In a Bash console:
      ```bash
-     git clone https://github.com/yourusername/your-repo.git /home/yourusername/mysite
-     cd /home/yourusername/mysite
+     git clone https://github.com/Saivyshnavi123/Chat-application.git 
+     cd Chat-application
      ```
      3. **Set Up Virtual Environment**:
    ```bash
