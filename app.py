@@ -166,3 +166,23 @@ def get_public_key():
     if user:
         return jsonify({'public_key': user[0], 'key_verification_url': user[1] or ''})
     return jsonify({'error': 'User not found'}), 404
+
+@app.route('/send_message', methods=['GET', 'POST'])
+def send_message():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        recipient_email = request.form['recipient_email']
+        verification_url = request.form.get('verification_url', '')
+        try:
+            message = request.form['message'].encode('utf-8')
+        except UnicodeEncodeError:
+            return render_template('send_message.html', error="Message contains invalid characters. Use standard text.")
+        
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute('SELECT public_key, key_verification_url FROM users WHERE email = ?', (recipient_email,))
+        user = c.fetchone()
+        if not user:
+            conn.close()
+            return render_template('send_message.html', error="Recipient not found")
