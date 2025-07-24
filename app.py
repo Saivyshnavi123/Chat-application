@@ -246,3 +246,10 @@ def delete_message():
     logger.debug(f"Message {message_id} deleted by {session['email']}")
     return jsonify({'success': 'Message deleted'})
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
