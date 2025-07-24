@@ -189,7 +189,7 @@ def send_message():
 
          recipient_public_key = '\n'.join(
             line.strip() for line in user[0].splitlines() if line.strip()
-        )
+            )
         db_verification_url = user[1] or ''
         
         # Verify public key if a URL is provided or stored
