@@ -186,3 +186,44 @@ def send_message():
         if not user:
             conn.close()
             return render_template('send_message.html', error="Recipient not found")
+
+         recipient_public_key = '\n'.join(line.strip() for line in user[0].splitlines() if line.strip())
+        db_verification_url = user[1] or ''
+        
+        # Verify public key if a URL is provided or stored
+        warning = None
+        if verification_url or db_verification_url:
+            url_to_check = verification_url or db_verification_url
+            try:
+                response = requests.get(url_to_check, timeout=5)
+                if response.status_code != 200 or recipient_public_key not in response.text:
+                    conn.close()
+                    return render_template('send_message.html', error="Public key verification failed: Key not found at URL or mismatch.")
+            except requests.RequestException:
+                warning = f"Could not verify public key at {url_to_check}. Proceeding without verification."
+        else:
+            warning = "No GitHub URL provided. The message will be encrypted with the stored public key, which may be less secure."
+        
+        try:
+            aes_key = get_random_bytes(16)
+            nonce = get_random_bytes(16)
+            padding_length = 16 - (len(message) % 16)
+            message += bytes([padding_length] * padding_length)
+            cipher_aes = AES.new(aes_key, AES.MODE_CBC, nonce)
+            encrypted_message = base64.b64encode(cipher_aes.encrypt(message)).decode()
+            
+            recipient_key = RSA.import_key(recipient_public_key)
+            cipher_rsa = PKCS1_OAEP.new(recipient_key)
+            encrypted_key = base64.b64encode(cipher_rsa.encrypt(aes_key)).decode()
+            
+            c.execute('INSERT INTO messages (sender_email, recipient_email, encrypted_message, encrypted_key, nonce) VALUES (?, ?, ?, ?, ?)', 
+                     (session['email'], recipient_email, encrypted_message, encrypted_key, base64.b64encode(nonce).decode()))
+            conn.commit()
+            conn.close()
+            logger.debug(f"Message sent from {session['email']} to {recipient_email}")
+            return render_template('send_message.html', message="Message sent successfully", warning=warning)
+        except ValueError as e:
+            conn.close()
+            logger.error(f"Error encrypting message: {str(e)}")
+            return render_template('send_message.html', error=f"Invalid public key format: {str(e)}")
+    return render_template('send_message.html')
