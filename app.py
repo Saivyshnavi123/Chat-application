@@ -153,3 +153,16 @@ def home():
             decrypted_messages.append((msg[0], msg[1], f"Error decrypting message: {str(e)}"))
     return render_template('home.html', messages=decrypted_messages)
 
+@app.route('/get_public_key', methods=['POST'])
+def get_public_key():
+    email = request.form.get('email')
+    if not email:
+        return jsonify({'error': 'Email is required'}), 400
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('SELECT public_key, key_verification_url FROM users WHERE email = ?', (email,))
+    user = c.fetchone()
+    conn.close()
+    if user:
+        return jsonify({'public_key': user[0], 'key_verification_url': user[1] or ''})
+    return jsonify({'error': 'User not found'}), 404
