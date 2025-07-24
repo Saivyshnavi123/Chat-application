@@ -227,3 +227,22 @@ def send_message():
             logger.error(f"Error encrypting message: {str(e)}")
             return render_template('send_message.html', error=f"Invalid public key format: {str(e)}")
     return render_template('send_message.html')
+
+@app.route('/delete_message', methods=['POST'])
+def delete_message():
+    if 'email' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
+    message_id = request.form.get('message_id')
+    if not message_id:
+        return jsonify({'error': 'Message ID is required'}), 400
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('DELETE FROM messages WHERE id = ? AND recipient_email = ?', (message_id, session['email']))
+    if c.rowcount == 0:
+        conn.close()
+        return jsonify({'error': 'Message not found or unauthorized'}), 404
+    conn.commit()
+    conn.close()
+    logger.debug(f"Message {message_id} deleted by {session['email']}")
+    return jsonify({'success': 'Message deleted'})
+
