@@ -187,7 +187,9 @@ def send_message():
             conn.close()
             return render_template('send_message.html', error="Recipient not found")
 
-         recipient_public_key = '\n'.join(line.strip() for line in user[0].splitlines() if line.strip())
+         recipient_public_key = '\n'.join(
+            line.strip() for line in user[0].splitlines() if line.strip()
+        )
         db_verification_url = user[1] or ''
         
         # Verify public key if a URL is provided or stored
