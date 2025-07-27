@@ -138,3 +138,6 @@ To deploy the application online, use PythonAnywhere’s free tier:
 - PyCryptodome: https://pycryptodome.readthedocs.io/
 - Requests: https://requests.readthedocs.io/
 
+## AI Usage
+We have used artificial intelligence for knowing the information regarding RSA and AES usages, keys, features, and benefits.
+
