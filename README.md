@@ -17,7 +17,7 @@ This project is a Flask-based web application designed for secure messaging, imp
 
 The proejct requires a secure messaging application with a mechanism to verify user identities, protecting against a malicious server swapping public keys. This is achieved through:
 
-- **PK/DNS Based Identity**: Users post their public key to a public GitHub Gist (e.g., 'https://gist.githubusercontent.com/Koushik168/19bc23f182537ab82b085bc965c74842/raw/213c8903efb5150e58a68195587f1dac6f3d8d9b/gistfile1.txt)`) and provide the URL during signup. The application verifies the recipient’s public key against this URL before sending a message, ensuring the key hasn’t been tampered with. GitHub’s HTTPS URLs align with the “DNS based” aspect, and Gists serve as a “social media based identity” due to their public, user-associated nature.
+- **PK/DNS Based Identity**: Users post their public key to a public GitHub Gist (e.g., 'https://gist.githubusercontent.com/Koushik168/19bc23f182537ab82b085bc965c74842/raw/213c8903efb5150e58a68195587f1dac6f3d8d9b/gistfile1.txt)`). The application verifies the recipient’s public key against this URL before sending a message, ensuring the key hasn’t been tampered with. GitHub’s HTTPS URLs align with the “DNS based” aspect, and Gists serve as a “social media based identity” due to their public, user-associated nature.
 - **Security**: Messages are encrypted with AES and RSA, ensuring confidentiality. HTTPS (enabled via hosting) secures data in transit.
 - **Accessibility**: The application can be hosted on PythonAnywhere, providing a public URL for testing (e.g., `https://yourusername.pythonanywhere.com`).
 
@@ -29,7 +29,7 @@ The proejct requires a secure messaging application with a mechanism to verify u
 - ### Setup
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
+   git clone https://github.com/Saivyshnavi123/Chat-application.git 
    cd your-repo
    ```
 
@@ -61,7 +61,7 @@ The proejct requires a secure messaging application with a mechanism to verify u
    ```bash
    python app.py
    ```
-   Access the app at `http://localhost:5000`.
+   Access the app at (http://127.0.0.1:5000/ )
 
    ### Hosting on PythonAnywhere
 To deploy the application online, use PythonAnywhere’s free tier:
@@ -109,7 +109,6 @@ To deploy the application online, use PythonAnywhere’s free tier:
    - Copy the displayed public key and create a public Gist:
      - Go to [GitHub Gists](https://gist.github.com).
      - Paste the key into a file (e.g., `public_key.pem`), set as public, and copy the raw URL.
-     - Paste the URL into the signup form if not already done.
 2. **Log In**: Use your email and password at `/login`.
 3. **Send a Message**:
    - Go to `/send_message`.
