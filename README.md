@@ -8,7 +8,7 @@ This project is a Flask-based web application designed for secure messaging, imp
 
  **User Authentication**: Users can sign up and log in with email and password, with passwords securely hashed using Werkzeug.
  **Key Generation**: Generates RSA key pairs (2048-bit) during signup, storing the public key and (currently) the private key in a SQLite database.
-**Identity Verification**: Users can provide a GitHub Gist URL containing their public key during signup. Before sending a message, the recipient’s public key is verified against the Gist URL to ensure authenticity, meeting the project’s “PK/DNS based identity” requirement.
+**Identity Verification**: Before sending a message, the recipient’s public key is verified against the Gist URL to ensure authenticity, meeting the project’s “PK/DNS based identity” requirement.
 **End-to-End Encryption**: Messages are encrypted using AES-CBC with a random key, which is encrypted with the recipient’s RSA public key (PKCS1_OAEP).
 **Message Management**: Users can view decrypted messages in their inbox and delete messages securely.
 **User-Friendly Interface**: Templates (`signup.html`, `send_message.html`, etc.) provide clear instructions for posting public keys to GitHub Gists and verifying recipient keys.
@@ -86,26 +86,26 @@ To deploy the application online, use PythonAnywhere’s free tier:
 
    5. **Configure Web App**:
    - In the “Web” tab, create a manual configuration web app (Python 3.9).
-   - Set source code path: `/home/yourusername/mysite`.
+   - Set source code path: `/home/caxy/mysite`.
    - Set virtualenv: `myenv`.
-   - Edit WSGI file (`/var/www/yourusername_pythonanywhere_com_wsgi.py`):
+   - Edit WSGI file (`/var/www/caxy_pythonanywhere_com_wsgi.py`):
      ```python
      import sys
-     project_home = '/home/yourusername/mysite'
+     project_home = '/home/caxy/mysite'
      if project_home not in sys.path:
          sys.path.append(project_home)
      from app import app as application
      ```
-   - Set working directory: `/home/yourusername/mysite`.
-   - Add static file mapping: URL `/static/` to `/home/yourusername/mysite/static`.
+   - Set working directory: `/home/caxy/mysite`.
+   - Add static file mapping: URL `/static/` to `/home/caxy/mysite/static`.
 6. **Enable HTTPS**: In the “Web” tab, enable “Force HTTPS”.
-7. **Reload**: Click “Reload” and access at `https://yourusername.pythonanywhere.com`.
+7. **Reload**: Click “Reload” and access at `https://caxy.pythonanywhere.com`.
 
 ## Usage
 
 1. **Sign Up**:
    - Navigate to `/signup`.
-   - Enter an email, password, and optionally a GitHub Gist URL containing your public key (e.g., `https://gist.githubusercontent.com/Caxzen/0e795385c414ac7bddffd8883554fcf5/raw/9868773a0b2f9c95fd3861371dac3e0a9d331835/public_key.pem`).
+   - Enter an email, password, and optionally a GitHub Gist URL containing your public key (e.g., (https://gist.githubusercontent.com/Koushik168/e1d916af114bf1f8b9064c026206cefd/raw/4f0b876d16754308e9866d0b011077118b757f60/Public_Key.pem).
    - Copy the displayed public key and create a public Gist:
      - Go to [GitHub Gists](https://gist.github.com).
      - Paste the key into a file (e.g., `public_key.pem`), set as public, and copy the raw URL.
