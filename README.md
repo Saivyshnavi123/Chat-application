@@ -140,3 +140,6 @@ To deploy the application online, use PythonAnywhere’s free tier:
 ## AI Usage
 We have used artificial intelligence for knowing the information regarding RSA and AES usages, keys, features, and benefits.
 
+**Note** 
+After presenting in the class, the professor had requested to store the private key in the session; we did that. Please find the below link for the new repository.
+https://github.com/Saivyshnavi123/updated-secure-chat-application.git
